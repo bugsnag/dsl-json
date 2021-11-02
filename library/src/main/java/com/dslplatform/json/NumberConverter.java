@@ -1,5 +1,7 @@
 package com.dslplatform.json;
 
+import androidx.annotation.Nullable;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;

@@ -1,5 +1,7 @@
 package com.dslplatform.json;
 
+import androidx.annotation.Nullable;
+
 public class SerializationException extends RuntimeException {
 	public SerializationException(@Nullable String reason) {
 		super(reason);

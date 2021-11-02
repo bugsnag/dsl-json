@@ -1,5 +1,7 @@
 package com.dslplatform.json;
 
+import androidx.annotation.Nullable;
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;

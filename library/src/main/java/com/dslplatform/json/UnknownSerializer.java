@@ -1,5 +1,7 @@
 package com.dslplatform.json;
 
+import androidx.annotation.Nullable;
+
 import java.io.IOException;
 
 interface UnknownSerializer {
