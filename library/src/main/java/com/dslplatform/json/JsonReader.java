@@ -17,6 +17,7 @@ import java.util.*;
  *
  * @param <TContext> context passed to deserialized object instances
  */
+@SuppressWarnings({"rawtypes", "serial"}) // suppress pre-existing warnings
 public final class JsonReader<TContext> {
 
 	private static final boolean[] WHITESPACE = new boolean[256];

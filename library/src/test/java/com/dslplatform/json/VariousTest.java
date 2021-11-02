@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public class VariousTest {
 
 	class CollectionWriter implements JsonWriter.WriteObject<Collection> {

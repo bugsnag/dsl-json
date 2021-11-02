@@ -5,6 +5,7 @@ package com.dslplatform.json;
  * DslJson will use ServiceLoader.load(Configuration.class) in default constructor.
  * This will load services registered in META-INF/services/com.dslplatform.json.Configuration file.
  */
+@SuppressWarnings("rawtypes") // suppress pre-existing warnings
 public interface Configuration {
 	/**
 	 * Configure library instance with appropriate readers/writers/etc...

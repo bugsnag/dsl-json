@@ -2,6 +2,7 @@ package com.dslplatform.json;
 
 import androidx.annotation.Nullable;
 
+@SuppressWarnings("serial") // suppress pre-existing warnings
 public class SerializationException extends RuntimeException {
 	public SerializationException(@Nullable String reason) {
 		super(reason);

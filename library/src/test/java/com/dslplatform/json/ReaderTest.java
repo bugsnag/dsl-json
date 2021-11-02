@@ -10,6 +10,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.util.Map;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public class ReaderTest {
 
 	private final DslJson<Object> dslJson = new DslJson<Object>();

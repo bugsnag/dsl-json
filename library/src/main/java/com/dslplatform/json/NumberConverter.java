@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public abstract class NumberConverter {
 
 	public final static short[] SHORT_EMPTY_ARRAY = new short[0];

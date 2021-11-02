@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public class StreamTest {
 
 	private final DslJson<Object> dslJson = new DslJson<Object>();

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public abstract class UUIDConverter {
 
 	public static final UUID MIN_UUID = new java.util.UUID(0L, 0L);

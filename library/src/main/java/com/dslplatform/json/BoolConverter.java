@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public abstract class BoolConverter {
 
 	public final static boolean[] EMPTY_ARRAY = new boolean[0];

@@ -60,6 +60,7 @@ import java.util.concurrent.*;
  *
  * @param <TContext> used for library specialization. If unsure, use Object
  */
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public class DslJson<TContext> implements UnknownSerializer, TypeLookup {
 
 	private static final Charset UTF8 = Charset.forName("UTF-8");

@@ -33,6 +33,7 @@
 
 package com.dslplatform.json;
 
+@SuppressWarnings("fallthrough") // suppress pre-existing warnings
 abstract class Grisu3 {
 
 	// FastDtoa will produce at most kFastDtoaMaximalLength digits.

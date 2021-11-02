@@ -8,6 +8,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public abstract class NetConverter {
 
 	static final JsonReader.ReadObject<URI> UriReader = new JsonReader.ReadObject<URI>() {

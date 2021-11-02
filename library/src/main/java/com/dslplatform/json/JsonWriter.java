@@ -26,6 +26,7 @@ import java.util.*;
  * For maximum performance JsonWriter instances should be reused (to avoid allocation of new byte[] buffer instances).
  * They should not be shared across threads (concurrently) so for Thread reuse it's best to use patterns such as ThreadLocal.
  */
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public final class JsonWriter {
 
 	private static final Charset UTF_8 = Charset.forName("UTF-8");

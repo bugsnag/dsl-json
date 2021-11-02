@@ -17,6 +17,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.*;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public abstract class XmlConverter {
 
 	static final JsonReader.ReadObject<Element> Reader = new JsonReader.ReadObject<Element>() {

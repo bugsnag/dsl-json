@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import java.io.IOException;
 import java.util.*;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public abstract class ObjectConverter {
 
 	private static final JsonReader.ReadObject<Map<String, Object>> TypedMapReader = new JsonReader.ReadObject<Map<String, Object>>() {

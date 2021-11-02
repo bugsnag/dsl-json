@@ -7,6 +7,7 @@ import com.dslplatform.json.generated.ocd.javaasserts.MapAsserts;
 
 import java.io.IOException;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public class NullableMapDefaultValueTurtle {
 	private static StaticJson.JsonSerialization jsonSerialization;
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public abstract class StringConverter {
 
 	public static final JsonReader.ReadObject<String> READER = new JsonReader.ReadObject<String>() {

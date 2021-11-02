@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.util.*;
 
+@SuppressWarnings({"rawtypes", "unchecked"}) // suppress pre-existing warnings
 public class NumberConverterTest {
 
 	private final DslJson<Object> dslJson = new DslJson<Object>(new DslJson.Settings<Object>().doublePrecision(JsonReader.DoublePrecision.HIGH));

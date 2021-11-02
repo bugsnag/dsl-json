@@ -2,6 +2,7 @@ package com.dslplatform.json;
 
 import java.io.IOException;
 
+@SuppressWarnings("serial") // suppress pre-existing warnings
 public class ParsingException extends IOException {
 
 	private ParsingException(String reason) {
