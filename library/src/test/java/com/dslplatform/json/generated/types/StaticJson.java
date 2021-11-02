@@ -5,7 +5,6 @@ import com.dslplatform.json.generated.ocd.javaasserts.*;
 import org.junit.Assert;
 import org.w3c.dom.Element;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -60,15 +59,11 @@ public class StaticJson {
 					BooleanAsserts.assertNullableArrayOfOneEquals((boolean[])result1, (boolean[])result2);
 				} else if (manifest.getComponentType() == byte.class) {
 					BinaryAsserts.assertNullableEquals((byte[])result1, (byte[])result2);
-				} else if (manifest.getComponentType() == BufferedImage.class) {
-					ImageAsserts.assertNullableArrayOfNullableEquals((BufferedImage[])result1, (BufferedImage[])result2);
 				} else if (manifest.getComponentType() == Element.class) {
 					XmlAsserts.assertNullableArrayOfNullableEquals((Element[])result1, (Element[])result2);
 				} else {
 					Assert.assertArrayEquals((Object[]) result1, (Object[]) result2);
 				}
-			} else if (manifest == BufferedImage.class) {
-				ImageAsserts.assertNullableEquals((BufferedImage)result1, (BufferedImage)result2);
 			} else if (manifest == Element.class) {
 				XmlAsserts.assertNullableEquals((Element)result1, (Element)result2);
 			} else {

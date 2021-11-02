@@ -810,17 +810,6 @@ public class DslJson<TContext> implements UnknownSerializer, TypeLookup {
 	}
 
 	static void registerJavaSpecifics(final DslJson json) {
-		json.registerReader(java.awt.geom.Point2D.Double.class, JavaGeomConverter.LocationReader);
-		json.registerReader(java.awt.geom.Point2D.class, JavaGeomConverter.LocationReader);
-		json.registerWriter(java.awt.geom.Point2D.class, JavaGeomConverter.LocationWriter);
-		json.registerReader(java.awt.Point.class, JavaGeomConverter.PointReader);
-		json.registerWriter(java.awt.Point.class, JavaGeomConverter.PointWriter);
-		json.registerReader(java.awt.geom.Rectangle2D.Double.class, JavaGeomConverter.RectangleReader);
-		json.registerReader(java.awt.geom.Rectangle2D.class, JavaGeomConverter.RectangleReader);
-		json.registerWriter(java.awt.geom.Rectangle2D.class, JavaGeomConverter.RectangleWriter);
-		json.registerReader(java.awt.image.BufferedImage.class, JavaGeomConverter.ImageReader);
-		json.registerReader(java.awt.Image.class, JavaGeomConverter.ImageReader);
-		json.registerWriter(java.awt.Image.class, JavaGeomConverter.ImageWriter);
 		json.registerReader(Element.class, XmlConverter.Reader);
 		json.registerWriter(Element.class, XmlConverter.Writer);
 	}
