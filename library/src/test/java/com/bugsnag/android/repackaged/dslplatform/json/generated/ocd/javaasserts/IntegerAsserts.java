@@ -1,4 +1,4 @@
-package com.bugsnag.dslplatform.json.generated.ocd.javaasserts;
+package com.bugsnag.android.repackaged.dslplatform.json.generated.ocd.javaasserts;
 
 import org.junit.Assert;
 

@@ -1,6 +1,6 @@
 package com.bugsnag.android.repackaged.dslplatform.json;
 
-import com.bugsnag.dslplatform.json.DslJson;
+import com.bugsnag.android.repackaged.dslplatform.json.DslJson;
 
 import org.junit.Assert;
 

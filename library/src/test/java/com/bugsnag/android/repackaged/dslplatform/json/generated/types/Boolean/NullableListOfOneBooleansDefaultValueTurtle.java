@@ -1,9 +1,9 @@
-package com.bugsnag.dslplatform.json.generated.types.Boolean;
+package com.bugsnag.android.repackaged.dslplatform.json.generated.types.Boolean;
 
 
 
-import com.bugsnag.dslplatform.json.generated.types.StaticJson;
-import com.bugsnag.dslplatform.json.generated.ocd.javaasserts.BooleanAsserts;
+import com.bugsnag.android.repackaged.dslplatform.json.generated.types.StaticJson;
+import com.bugsnag.android.repackaged.dslplatform.json.generated.ocd.javaasserts.BooleanAsserts;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
-package com.bugsnag.dslplatform.json.generated.ocd.javaasserts;
+package com.bugsnag.android.repackaged.dslplatform.json.generated.ocd.javaasserts;
 
-import com.bugsnag.dslplatform.json.generated.ocd.test.Utils;
+import com.bugsnag.android.repackaged.dslplatform.json.generated.ocd.test.Utils;
 import org.junit.Assert;
 
 public class XmlAsserts {

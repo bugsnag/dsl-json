@@ -1,9 +1,9 @@
-package com.bugsnag.dslplatform.json.generated.types.Float;
+package com.bugsnag.android.repackaged.dslplatform.json.generated.types.Float;
 
 
 
-import com.bugsnag.dslplatform.json.generated.types.StaticJson;
-import com.bugsnag.dslplatform.json.generated.ocd.javaasserts.FloatAsserts;
+import com.bugsnag.android.repackaged.dslplatform.json.generated.types.StaticJson;
+import com.bugsnag.android.repackaged.dslplatform.json.generated.ocd.javaasserts.FloatAsserts;
 
 import java.io.IOException;
 

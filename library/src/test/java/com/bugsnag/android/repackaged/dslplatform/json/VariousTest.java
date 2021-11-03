@@ -2,8 +2,8 @@ package com.bugsnag.android.repackaged.dslplatform.json;
 
 import androidx.annotation.Nullable;
 
-import com.bugsnag.dslplatform.json.DslJson;
-import com.bugsnag.dslplatform.json.JsonWriter;
+import com.bugsnag.android.repackaged.dslplatform.json.DslJson;
+import com.bugsnag.android.repackaged.dslplatform.json.JsonWriter;
 
 import org.junit.Assert;
 import org.junit.Test;

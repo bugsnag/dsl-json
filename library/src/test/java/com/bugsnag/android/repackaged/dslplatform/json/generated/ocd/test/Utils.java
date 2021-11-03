@@ -1,4 +1,4 @@
-package com.bugsnag.dslplatform.json.generated.ocd.test;
+package com.bugsnag.android.repackaged.dslplatform.json.generated.ocd.test;
 
 import org.w3c.dom.Element;
 

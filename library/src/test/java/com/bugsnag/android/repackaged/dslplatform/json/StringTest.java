@@ -1,8 +1,8 @@
 package com.bugsnag.android.repackaged.dslplatform.json;
 
-import com.bugsnag.dslplatform.json.DslJson;
-import com.bugsnag.dslplatform.json.JsonReader;
-import com.bugsnag.dslplatform.json.StringConverter;
+import com.bugsnag.android.repackaged.dslplatform.json.DslJson;
+import com.bugsnag.android.repackaged.dslplatform.json.JsonReader;
+import com.bugsnag.android.repackaged.dslplatform.json.StringConverter;
 
 import org.junit.Assert;
 import org.junit.Test;
