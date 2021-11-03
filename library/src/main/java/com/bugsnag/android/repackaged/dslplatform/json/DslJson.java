@@ -2724,117 +2724,121 @@ public class DslJson<TContext> implements UnknownSerializer, TypeLookup {
 	 */
 	@SuppressWarnings("unchecked")
 	public boolean serialize(final JsonWriter writer, final Type manifest, @Nullable final Object value) {
-		if (writer == null) {
-			throw new IllegalArgumentException("writer can't be null");
-		}
-		if (value == null) {
-			writer.writeNull();
-			return true;
-		} else if (value instanceof JsonObject) {
-			((JsonObject) value).serialize(writer, omitDefaults);
-			return true;
-		} else if (value instanceof JsonObject[]) {
-			serialize(writer, (JsonObject[]) value);
-			return true;
-		}
-		final JsonWriter.WriteObject simpleWriter = tryFindWriter(manifest);
-		if (simpleWriter != null) {
-			simpleWriter.write(writer, value);
-			return true;
-		}
-		Class<?> container = null;
-		if (manifest instanceof Class<?>) {
-			container = (Class<?>) manifest;
-		}
-		if (container != null && container.isArray()) {
-			if (Array.getLength(value) == 0) {
-				writer.writeAscii("[]");
+		try {
+			if (writer == null) {
+				throw new IllegalArgumentException("writer can't be null");
+			}
+			if (value == null) {
+				writer.writeNull();
+				return true;
+			} else if (value instanceof JsonObject) {
+				((JsonObject) value).serialize(writer, omitDefaults);
+				return true;
+			} else if (value instanceof JsonObject[]) {
+				serialize(writer, (JsonObject[]) value);
 				return true;
 			}
-			final Class<?> elementManifest = container.getComponentType();
-			if (char.class == elementManifest) {
-				//TODO? char[] !?
-				StringConverter.serialize(new String((char[]) value), writer);
+			final JsonWriter.WriteObject simpleWriter = tryFindWriter(manifest);
+			if (simpleWriter != null) {
+				simpleWriter.write(writer, value);
 				return true;
-			} else {
-				final JsonWriter.WriteObject<Object> elementWriter = (JsonWriter.WriteObject<Object>) tryFindWriter(elementManifest);
+			}
+			Class<?> container = null;
+			if (manifest instanceof Class<?>) {
+				container = (Class<?>) manifest;
+			}
+			if (container != null && container.isArray()) {
+				if (Array.getLength(value) == 0) {
+					writer.writeAscii("[]");
+					return true;
+				}
+				final Class<?> elementManifest = container.getComponentType();
+				if (char.class == elementManifest) {
+					//TODO? char[] !?
+					StringConverter.serialize(new String((char[]) value), writer);
+					return true;
+				} else {
+					final JsonWriter.WriteObject<Object> elementWriter = (JsonWriter.WriteObject<Object>) tryFindWriter(elementManifest);
+					if (elementWriter != null) {
+						writer.serialize((Object[]) value, elementWriter);
+						return true;
+					}
+				}
+			}
+			if (value instanceof Collection) {
+				final Collection items = (Collection) value;
+				if (items.isEmpty()) {
+					writer.writeAscii("[]");
+					return true;
+				}
+				Class<?> baseType = null;
+				final Iterator iterator = items.iterator();
+				final boolean isList = items instanceof List;
+				final List<Object> values = isList ? (List) items : new ArrayList<Object>();
+				final ArrayList<JsonWriter.WriteObject> itemWriters = new ArrayList<JsonWriter.WriteObject>();
+				Class<?> lastElementType = null;
+				JsonWriter.WriteObject lastWriter = null;
+				boolean hasUnknownWriter = false;
+				//TODO: pick lowest common denominator!?
+				do {
+					final Object item = iterator.next();
+					if (!isList) {
+						values.add(item);
+					}
+					if (item != null) {
+						final Class<?> elementType = item.getClass();
+						if (elementType != baseType) {
+							if (baseType == null || elementType.isAssignableFrom(baseType)) {
+								baseType = elementType;
+							}
+						}
+						if (lastElementType != elementType) {
+							lastElementType = elementType;
+							lastWriter = tryFindWriter(elementType);
+						}
+						itemWriters.add(lastWriter);
+						hasUnknownWriter = hasUnknownWriter || lastWriter == null;
+					} else {
+						itemWriters.add(NULL_WRITER);
+					}
+				} while (iterator.hasNext());
+				if (baseType != null && JsonObject.class.isAssignableFrom(baseType)) {
+					writer.writeByte(JsonWriter.ARRAY_START);
+					final Iterator iter = values.iterator();
+					final JsonObject first = (JsonObject) iter.next();
+					if (first != null) first.serialize(writer, omitDefaults);
+					else writer.writeNull();
+					while (iter.hasNext()) {
+						writer.writeByte(JsonWriter.COMMA);
+						final JsonObject next = (JsonObject) iter.next();
+						if (next != null) next.serialize(writer, omitDefaults);
+						else writer.writeNull();
+					}
+					writer.writeByte(JsonWriter.ARRAY_END);
+					return true;
+				}
+				if (!hasUnknownWriter) {
+					writer.writeByte(JsonWriter.ARRAY_START);
+					final Iterator iter = values.iterator();
+					int cur = 1;
+					itemWriters.get(0).write(writer, iter.next());
+					while (iter.hasNext()) {
+						writer.writeByte(JsonWriter.COMMA);
+						itemWriters.get(cur++).write(writer, iter.next());
+					}
+					writer.writeByte(JsonWriter.ARRAY_END);
+					return true;
+				}
+				final JsonWriter.WriteObject<Object> elementWriter = (JsonWriter.WriteObject<Object>) tryFindWriter(baseType);
 				if (elementWriter != null) {
-					writer.serialize((Object[]) value, elementWriter);
+					writer.serialize(items, elementWriter);
 					return true;
 				}
 			}
+			return false;
+		} catch (ClassCastException exc) { // workaround for mixed primitive arrays (PLAT-7551)
+			return false;
 		}
-		if (value instanceof Collection) {
-			final Collection items = (Collection) value;
-			if (items.isEmpty()) {
-				writer.writeAscii("[]");
-				return true;
-			}
-			Class<?> baseType = null;
-			final Iterator iterator = items.iterator();
-			final boolean isList = items instanceof List;
-			final List<Object> values = isList ? (List) items : new ArrayList<Object>();
-			final ArrayList<JsonWriter.WriteObject> itemWriters = new ArrayList<JsonWriter.WriteObject>();
-			Class<?> lastElementType = null;
-			JsonWriter.WriteObject lastWriter = null;
-			boolean hasUnknownWriter = false;
-			//TODO: pick lowest common denominator!?
-			do {
-				final Object item = iterator.next();
-				if (!isList) {
-					values.add(item);
-				}
-				if (item != null) {
-					final Class<?> elementType = item.getClass();
-					if (elementType != baseType) {
-						if (baseType == null || elementType.isAssignableFrom(baseType)) {
-							baseType = elementType;
-						}
-					}
-					if (lastElementType != elementType) {
-						lastElementType = elementType;
-						lastWriter = tryFindWriter(elementType);
-					}
-					itemWriters.add(lastWriter);
-					hasUnknownWriter = hasUnknownWriter || lastWriter == null;
-				} else {
-					itemWriters.add(NULL_WRITER);
-				}
-			} while (iterator.hasNext());
-			if (baseType != null && JsonObject.class.isAssignableFrom(baseType)) {
-				writer.writeByte(JsonWriter.ARRAY_START);
-				final Iterator iter = values.iterator();
-				final JsonObject first = (JsonObject) iter.next();
-				if (first != null) first.serialize(writer, omitDefaults);
-				else writer.writeNull();
-				while (iter.hasNext()) {
-					writer.writeByte(JsonWriter.COMMA);
-					final JsonObject next = (JsonObject) iter.next();
-					if (next != null) next.serialize(writer, omitDefaults);
-					else writer.writeNull();
-				}
-				writer.writeByte(JsonWriter.ARRAY_END);
-				return true;
-			}
-			if (!hasUnknownWriter) {
-				writer.writeByte(JsonWriter.ARRAY_START);
-				final Iterator iter = values.iterator();
-				int cur = 1;
-				itemWriters.get(0).write(writer, iter.next());
-				while (iter.hasNext()) {
-					writer.writeByte(JsonWriter.COMMA);
-					itemWriters.get(cur++).write(writer, iter.next());
-				}
-				writer.writeByte(JsonWriter.ARRAY_END);
-				return true;
-			}
-			final JsonWriter.WriteObject<Object> elementWriter = (JsonWriter.WriteObject<Object>) tryFindWriter(baseType);
-			if (elementWriter != null) {
-				writer.serialize(items, elementWriter);
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private static final byte[] NULL = new byte[]{'n', 'u', 'l', 'l'};
