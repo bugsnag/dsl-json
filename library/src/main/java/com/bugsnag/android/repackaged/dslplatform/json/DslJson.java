@@ -99,7 +99,7 @@ public class DslJson<TContext> implements UnknownSerializer, TypeLookup {
 	private final JsonReader.UnknownNumberParsing unknownNumbers;
 	private final int maxNumberDigits;
 	private final int maxStringSize;
-	protected final ThreadLocal<JsonWriter> localWriter;
+	public final ThreadLocal<JsonWriter> localWriter;
 	protected final ThreadLocal<JsonReader> localReader;
 	private final ExternalConverterAnalyzer externalConverterAnalyzer;
 	private final Map<Class<? extends Annotation>, Boolean> creatorMarkers;
@@ -543,7 +543,10 @@ public class DslJson<TContext> implements UnknownSerializer, TypeLookup {
 		registerReader(LinkedHashMap.class, ObjectConverter.MapReader);
 		registerReader(HashMap.class, ObjectConverter.MapReader);
 		registerReader(Map.class, ObjectConverter.MapReader);
-		registerWriter(Map.class, new JsonWriter.WriteObject<Map>() {
+
+		// Bugsnag optimization: we write a lot of maps so cache the mapWriter in a field.
+		// this avoids calling tryFindWriter() at runtime, boosting perf.
+		mapWriter = new JsonWriter.WriteObject<Map>() {
 			@Override
 			public void write(JsonWriter writer, @Nullable Map value) {
 				if (value == null) {
@@ -556,7 +559,9 @@ public class DslJson<TContext> implements UnknownSerializer, TypeLookup {
 					}
 				}
 			}
-		});
+		};
+		registerWriter(Map.class, mapWriter);
+
 		registerReader(URI.class, NetConverter.UriReader);
 		registerWriter(URI.class, NetConverter.UriWriter);
 		registerReader(InetAddress.class, NetConverter.AddressReader);
@@ -1016,6 +1021,9 @@ public class DslJson<TContext> implements UnknownSerializer, TypeLookup {
 	}
 
 	private final ConcurrentMap<Class<?>, Class<?>> writerMap = new ConcurrentHashMap<Class<?>, Class<?>>();
+
+	// Bugsnag optimization: we write a lot of maps so cache the mapWriter in a field.
+	final JsonWriter.WriteObject mapWriter;
 
 	/**
 	 * Try to find registered writer for provided type.
@@ -2730,6 +2738,11 @@ public class DslJson<TContext> implements UnknownSerializer, TypeLookup {
 			}
 			if (value == null) {
 				writer.writeNull();
+				return true;
+			}
+			// Bugsnag optimization: we write a lot of maps so cache the mapWriter in a field.
+			else if (value instanceof Map) {
+				mapWriter.write(writer, value);
 				return true;
 			} else if (value instanceof JsonObject) {
 				((JsonObject) value).serialize(writer, omitDefaults);
