@@ -804,7 +804,7 @@ public class DslJson<TContext> implements UnknownSerializer, TypeLookup {
 		for (ClassLoader loader : loaders) {
 			try {
 				Class<?> external = loader.loadClass(name);
-				Configuration instance = (Configuration) external.newInstance();
+				Configuration instance = (Configuration) external.getDeclaredConstructor().newInstance();
 				instance.configure(json);
 			} catch (NoClassDefFoundError ignore) {
 			} catch (Exception ignore) {
