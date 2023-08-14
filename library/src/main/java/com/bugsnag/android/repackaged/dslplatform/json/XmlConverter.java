@@ -199,7 +199,7 @@ public abstract class XmlConverter {
 
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Element> deserializeCollection(final JsonReader reader) throws IOException {
-		return reader.deserializeCollection(Reader);
+		return reader.deserializeCollectionCustom(Reader);
 	}
 
 	public static void deserializeCollection(final JsonReader reader, final Collection<Element> res) throws IOException {
@@ -208,7 +208,7 @@ public abstract class XmlConverter {
 
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Element> deserializeNullableCollection(final JsonReader reader) throws IOException {
-		return reader.deserializeNullableCollection(Reader);
+		return reader.deserializeNullableCollectionCustom(Reader);
 	}
 
 	public static void deserializeNullableCollection(final JsonReader reader, final Collection<Element> res) throws IOException {

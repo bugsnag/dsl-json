@@ -1594,7 +1594,7 @@ public final class JsonReader<TContext> {
 		return res.toArray(emptyArray);
 	}
 
-	public final <T, S extends T> ArrayList<T> deserializeCollection(final ReadObject<S> readObject) throws IOException {
+	public final <T, S extends T> ArrayList<T> deserializeCollectionCustom(final ReadObject<S> readObject) throws IOException {
 		final ArrayList<T> res = new ArrayList<T>(4);
 		deserializeCollection(readObject, res);
 		return res;
@@ -1609,7 +1609,7 @@ public final class JsonReader<TContext> {
 		checkArrayEnd();
 	}
 
-	public final <T, S extends T> ArrayList<T> deserializeNullableCollection(final ReadObject<S> readObject) throws IOException {
+	public final <T, S extends T> ArrayList<T> deserializeNullableCollectionCustom(final ReadObject<S> readObject) throws IOException {
 		final ArrayList<T> res = new ArrayList<T>(4);
 		deserializeNullableCollection(readObject, res);
 		return res;
@@ -1676,7 +1676,7 @@ public final class JsonReader<TContext> {
 		checkArrayEnd();
 	}
 
-	public final <T> Iterator<T> iterateOver(final JsonReader.ReadObject<T> reader) {
+	public final <T> Iterator<T> iterateOverCustom(final JsonReader.ReadObject<T> reader) {
 		return new WithReader<T>(reader, this);
 	}
 
