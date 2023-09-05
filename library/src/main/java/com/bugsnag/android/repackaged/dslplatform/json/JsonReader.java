@@ -1600,6 +1600,7 @@ public final class JsonReader<TContext> {
 		return res;
 	}
 
+	@SuppressWarnings("overloads")
 	public final <T, S extends T> void deserializeCollection(final ReadObject<S> readObject, final Collection<T> res) throws IOException {
 		res.add(readObject.read(this));
 		while (getNextToken() == ',') {
@@ -1615,6 +1616,7 @@ public final class JsonReader<TContext> {
 		return res;
 	}
 
+	@SuppressWarnings("overloads")
 	public final <T, S extends T> void deserializeNullableCollection(final ReadObject<S> readObject, final Collection<T> res) throws IOException {
 		if (wasNull()) {
 			res.add(null);
@@ -1638,6 +1640,7 @@ public final class JsonReader<TContext> {
 		return res;
 	}
 
+	@SuppressWarnings("overloads")
 	public final <T extends JsonObject> void deserializeCollection(final ReadJsonObject<T> readObject, final Collection<T> res) throws IOException {
 		if (last == '{') {
 			getNextToken();
@@ -1658,6 +1661,7 @@ public final class JsonReader<TContext> {
 		return res;
 	}
 
+	@SuppressWarnings("overloads")
 	public final <T extends JsonObject> void deserializeNullableCollection(final ReadJsonObject<T> readObject, final Collection<T> res) throws IOException {
 		if (last == '{') {
 			getNextToken();
